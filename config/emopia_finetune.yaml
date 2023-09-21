@@ -16,7 +16,7 @@ model:
   use_segemb: true
   n_segment_types: 2
 training:
-  ckpt_dir: ckpt/emopia_lead_sheet_chord11_{}
+  ckpt_dir: ckpt/emopia_{}
   ckpt_interval: 1
   feat_redraw_prob: 0.05
   gpuid: 0
