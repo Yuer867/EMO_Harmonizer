@@ -311,15 +311,15 @@ def generate_key(model, event2idx, idx2event, emotion,
 
 if __name__ == '__main__':
     """
-    REMI
-    (1) absolute:                                       False, False, False, False, False
-    (2) transpose:                                      True, False, False, False, False !!!
-    (3) transpose + rule-based:                         True, False, False, True, False !!!
-    functional
-    (4) absolute melody + relative chord:               False, True, False, False, False
-    (5) relative melody + relative chord:               False, True, True, False, False
-    (6) relative melody + relative chord + rule-based:  False, True, True, True, False !!!
-    (7) relative melody + relative chord + model-based: False, True, True, False, True !!!
+    inference options
+        Methods         Representation      key_determine       inference_params
+    (1) REMI            absolute            none                emo_harmonizer_ckpt/emopia_absolute/best_params.pt
+    (2) REMI(trans)     transpose           none                emo_harmonizer_ckpt/emopia_transpose/best_params.pt
+    (3) REMI(rule)      transpose           rule                emo_harmonizer_ckpt/emopia_transpose/best_params.pt
+    (4) Ours(ablated)   ablated             none                emo_harmonizer_ckpt/emopia_ablated/best_params.pt
+    (5) Ours            functional          none                emo_harmonizer_ckpt/emopia_ablated/best_params.pt
+    (6) Ours(rule)      functional          rule                emo_harmonizer_ckpt/emopia_functional/best_params.pt
+    (7) Ours(model)     functional          model               emo_harmonizer_ckpt/emopia_functional_model/best_params.pt
     """
     # configuration
     parser = argparse.ArgumentParser(description='')
@@ -337,7 +337,7 @@ if __name__ == '__main__':
                         default='emo_harmonizer_ckpt_functional/best_params.pt',
                         help='inference parameters')
     parser.add_argument('-o', '--output_dir',
-                        default='generation/emopia_functional',
+                        default='generation/emopia_functional_rule',
                         help='output directory')
     parser.add_argument('-p', '--play_midi',
                         default=False,
