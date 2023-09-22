@@ -3,7 +3,7 @@
 ## Convert MIDI to events
 
 ### EMOPIA
-1. Download [processed midi data](https://drive.google.com/drive/folders/1-AK2OXCGnz0WcuED5K8dj8-SkqCBbBQD?usp=sharing) (make sure you're in repository root directory).
+1. Download and unzip [processed midi data](https://drive.google.com/file/d/1j76WMK7jjORWeRBGRM8zTd6H1Iand6CZ/view?usp=sharing) (make sure you're in repository root directory).
 2. Convert MIDI to events.
 ```angular2html
 # REMI representation
