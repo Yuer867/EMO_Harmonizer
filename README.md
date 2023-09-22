@@ -72,7 +72,7 @@ python3 inference.py \
 ## Train the model by yourself
 **Note**: Please consider the combination of **functional representation** with **rule-based key determination** as an example. 
 Other options follow a similar format for inference.
-1. Use the provided events ([EMOPIA](https://drive.google.com/file/d/1IqisQe_bYAfUHZ__ioJrIrBkmn_8KLV_/view?usp=sharing), [HookTheory](https://drive.google.com/file/d/1gBBRiX7UM0uUP57ofXerIdZgul37fmKC/view?usp=sharing)) directly or convert MIDI to events following the steps.
+1. Use the provided events ([EMOPIA](https://drive.google.com/file/d/1IqisQe_bYAfUHZ__ioJrIrBkmn_8KLV_/view?usp=sharing), [HookTheory](https://drive.google.com/file/d/1gBBRiX7UM0uUP57ofXerIdZgul37fmKC/view?usp=sharing)) directly or convert MIDI to events following the [steps](https://github.com/Yuer867/EMO_Harmonizer/tree/main/representations#readme).
 2. Pre-train the model on `HookTheory`.
 ```angular2html
 python3 train.py \
