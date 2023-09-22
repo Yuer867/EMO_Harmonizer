@@ -7,7 +7,6 @@ import argparse
 import numpy as np
 from itertools import chain
 from collections import defaultdict
-from midi2audio import FluidSynth
 import torch
 
 from dataloader import REMISkylineToMidiTransformerDataset
@@ -541,6 +540,7 @@ if __name__ == '__main__':
                     output_midi_path=output_midi_path)
 
                 if play_midi:
+                    from midi2audio import FluidSynth
                     output_wav_path = os.path.join(out_path, 'lead_sheet_{}_{}.wav'.format(emotion_env.split('_')[-1], n))
                     midi_to_wav(output_midi_path, output_wav_path)
 
