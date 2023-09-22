@@ -395,8 +395,12 @@ if __name__ == '__main__':
     torch.cuda.set_device(gpuid)
 
     # dataloader configurations
-    data_path = train_conf['data_loader']['data_path'].format(representation)
-    vocab_path = train_conf['data_loader']['vocab_path'].format(representation)
+    if representation == 'transpose' and key_determine == 'rule':
+        data_path = train_conf['data_loader']['data_path'].format('transpose_rule')
+        vocab_path = train_conf['data_loader']['vocab_path'].format('transpose_rule')
+    else:
+        data_path = train_conf['data_loader']['data_path'].format(representation)
+        vocab_path = train_conf['data_loader']['vocab_path'].format(representation)
 
     # model configurations
     model_conf = train_conf['model']
@@ -452,8 +456,7 @@ if __name__ == '__main__':
 
     # --- generation --- #
     for i, p in enumerate(sample_pieces):
-        piece_data = pickle_load(p)
-        melody_pos, chord_pos, piece_evs = piece_data[0], piece_data[1], piece_data[2]
+        melody_pos, chord_pos, piece_evs = pickle_load(p)
 
         sample_name = p.split('/')[-1].split('.')[0]
         emotion = sample_name[:2]
@@ -468,12 +471,22 @@ if __name__ == '__main__':
             bar_melody_events = ['{}_{}'.format(e['name'], e['value']) for e in bar_melody_events]
             melody_events.append([dset.event2idx[e] for e in bar_melody_events])
 
+        if representation == 'transpose' and key_determine == 'rule':
+            origin_melody_pos, origin_chord_pos, origin_piece_evs = pickle_load(p.replace('_rule', ''))
+            origin_melody_events = []
+            for pos in origin_melody_pos:
+                bar_melody_events = origin_piece_evs[pos[0] + 1:pos[1]]
+                bar_melody_events = ['{}_{}'.format(e['name'], e['value']) for e in bar_melody_events]
+                origin_melody_events.append([dset.event2idx[e] for e in bar_melody_events])
+
         for n in range(samp_per_piece):
             for emotion_env in emotion_events:
                 # --- emotion event --- #
-                # if (emotion in ['Q1', 'Q4'] and emotion_env.split('_')[1] == 'Positive') or \
-                #         (emotion in ['Q2', 'Q3'] and emotion_env.split('_')[1] == 'Negative'):
-                #     continue
+                _melody_events = melody_events
+                if representation == 'transpose' and key_determine == 'rule':
+                    if (emotion in ['Q1', 'Q4'] and emotion_env.split('_')[1] == 'Positive') or \
+                            (emotion in ['Q2', 'Q3'] and emotion_env.split('_')[1] == 'Negative'):
+                        _melody_events = origin_melody_events
 
                 # --- key event --- #
                 if not model_based:
@@ -522,7 +535,7 @@ if __name__ == '__main__':
                 # --- chord events --- #
                 with torch.no_grad():
                     generated = generate_conditional(model, dset.event2idx, dset.idx2event,
-                                                     melody_events, generated, seg_inp,
+                                                     _melody_events, generated, seg_inp,
                                                      max_bars=max_bars, temp=temp, top_p=top_p, inadmissibles=None)
 
                 generated = word2event(generated, dset.idx2event)
