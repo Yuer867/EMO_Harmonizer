@@ -1,6 +1,8 @@
 # EMO_Harmonizer
 This is the official repository of **Emotion-Driven Melody Harmonization via Melodic Variation and Functional Representation**. 
 
+* [demo page](https://yuer867.github.io/emo_harmonizer/)
+
 ## Environment
 * **Python 3.8** and **CUDA 10.2** recommended
 * Install dependencies (required)
